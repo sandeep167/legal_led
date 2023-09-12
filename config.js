@@ -1,4 +1,4 @@
 // config.js
 module.exports = {
-  apiKey: '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', // Replace with your actual API key
+  apiKey: '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', // Replace with your actual API key
 };
