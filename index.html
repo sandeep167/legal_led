@@ -1,74 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>AI Text Generation</title>
+  <meta charset="utf-8">
+  <title>AI Text Generation</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <div class="header-content">
-            <h1 class="website-name">AI Text Generation</h1>
-        </div>
-    </header>
-
-    <section class="hero">
-        <h1 class="slogan">Generate Text with AI</h1>
-        <p class="summary">Enter a prompt, and AI will generate text for you. Try it now!</p>
-    </section>
-
-    <section class="text-generation-section">
-        <h2>Enter Your Prompt</h2>
-        <form id="generation-form">
-            <textarea name="userPrompt" id="userPrompt" rows="4" cols="50" placeholder="Enter your prompt here"></textarea>
-            <button type="submit">Generate Text</button>
-        </form>
-    </section>
-
-    <div id="generated-text">
-        <!-- The generated text will be displayed here -->
+  <header>
+    <div class="header-content">
+      <h1 class="website-name">AI Text Generation</h1>
     </div>
+  </header>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            // Handle form submission
-            $("#generation-form").submit(function (event) {
-                event.preventDefault(); // Prevent the form from submitting traditionally
+  <!-- ...rest of your HTML content... -->
+  
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  
+  <!-- Include your configuration file -->
+  <script src="config.js"></script>
+  
+  <script>
+    $(document).ready(function () {
+      // Handle form submission
+      $("#generation-form").submit(function (event) {
+        event.preventDefault(); // Prevent the form from submitting traditionally
 
-                // Get the user's input prompt
-                var userPrompt = $("#userPrompt").val();
+        // Get the user's input prompt
+        var userPrompt = $("#userPrompt").val();
 
-                // Make an API request to GPT-3 (replace 'YOUR_API_KEY_HERE' with your actual API key)
-                $.ajax({
-                    url: "https://api.openai.com/v1/engines/davinci/completions",
-                    type: "POST",
-                    headers: {
-                       headers: {
-    "Authorization": "Bearer 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",
-    "Openai-Organization": "org-fOtBElkJLORvTszsowxz2jtu",
-    "Content-Type": "application/json",
-}
-
-                    },
-                    data: JSON.stringify({
-                        prompt: userPrompt,
-                        max_tokens: 150, // Adjust this as needed for your text generation
-                    }),
-                    success: function (data) {
-                        // Extract the generated text from the API response
-                        var generatedText = data.choices[0].text;
-
-                        // Display the generated text on the webpage
-                        $("#generated-text").html("<h3>Generated Text:</h3><p>" + generatedText + "</p>");
-                    },
-                    error: function (error) {
-                        console.error("API request failed:", error);
-                    },
-                });
-            });
+        // Make an API request to GPT-3
+        $.ajax({
+          url: "https://api.openai.com/v1/engines/davinci/completions",
+          type: "POST",
+          headers: {
+            "Authorization": "Bearer " + apiKey, // Use the apiKey variable from config.js
+            "Content-Type": "application/json",
+          },
+          // ...rest of your code...
         });
-    </script>
+      });
+    });
+  </script>
 </body>
 </html>
