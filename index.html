@@ -45,8 +45,12 @@
                     url: "https://api.openai.com/v1/engines/davinci/completions",
                     type: "POST",
                     headers: {
-                        "Authorization": "Bearer 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", // Replace with your GPT-3 API key
-                        "Content-Type": "application/json",
+                       headers: {
+    "Authorization": "Bearer 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",
+    "Openai-Organization": "org-fOtBElkJLORvTszsowxz2jtu",
+    "Content-Type": "application/json",
+}
+
                     },
                     data: JSON.stringify({
                         prompt: userPrompt,
