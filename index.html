@@ -1,70 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>Legal Summary</title>
+  <meta charset="utf-8">
+  <title>Summary</title>
+  <!-- Add your CSS styles and include jQuery if needed -->
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <div class="header-content">
-            <h1 class="website-name">Legal Summary</h1>
-        </div>
-    </header>
-
-    <section class="hero">
-        <h1 class="slogan">Legal Knowledge Made Accessible</h1>
-        <p class="summary">Discover a new way to tackle complex legal documents. Our service transforms intricate legalese into clear, concise summaries, making the law accessible to everyone. Empower yourself with knowledge today.</p>
-    </section>
-
-    <section class="upload-section">
-        <h2>Enter Your Text</h2>
-        <form action="/" method="POST" id="summary-form">
-            <textarea name="userText" id="userText" rows="4" cols="50" placeholder="Enter your legal text here"></textarea>
-            <button type="submit">Submit</button>
-        </form>
-    </section>
-
-    <div id="summary-result">
-        <!-- The summary will be displayed here -->
+  <header>
+    <h1>SUMMARY</h1>
+  </header>
+  <section>
+    <h2>Section 1</h2>
+    <div class="">
+      <form id="summary-form">
+        <textarea name="userText" id="userText" rows="4" cols="50" placeholder="Enter your text here"></textarea>
+        <button type="submit">Generate Summary</button>
+      </form>
     </div>
+  </section>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            // Handle form submission
-            $("#summary-form").submit(function (event) {
-                event.preventDefault(); // Prevent the form from submitting traditionally
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      // Handle form submission
+      $("#summary-form").submit(function (event) {
+        event.preventDefault(); // Prevent the form from submitting traditionally
 
-                // Get the user's input text
-                var userText = $("#userText").val();
+        // Get the user's input text
+        var userText = $("#userText").val();
 
-                // Make an API request to GPT-3 (replace 'YOUR_API_KEY_HERE' with your actual API key)
-                $.ajax({
-                    url: "https://api.openai.com/v1/engines/davinci/completions",
-                    type: "POST",
-                    headers: {
-                        "Authorization": "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", // Replace with your API key
-                        "Content-Type": "application/json",
-                    },
-                    data: JSON.stringify({
-                        prompt: userText,
-                        max_tokens: 150, // Adjust this as needed for your summaries
-                    }),
-                    success: function (data) {
-                        // Extract the summary from the API response
-                        var summary = data.choices[0].text;
+        // Make an API request to GPT-3 to generate a summary
+        $.ajax({
+          url: "https://api.openai.com/v1/engines/davinci/completions",
+          type: "POST",
+          headers: {
+            "Authorization": "Bearer YOUR_API_KEY_HERE", // Replace with your GPT-3 API key
+            "Content-Type": "application/json",
+          },
+          data: JSON.stringify({
+            prompt: userText,
+            max_tokens: 150, // Adjust this as needed for your summaries
+          }),
+          success: function (data) {
+            // Extract the summary from the API response
+            var generatedSummary = data.choices[0].text;
 
-                        // Display the summary on the webpage
-                        $("#summary-result").html("<h3>Summary:</h3><p>" + summary + "</p>");
-                    },
-                    error: function (error) {
-                        console.error("API request failed:", error);
-                    },
-                });
-            });
+            // Redirect to the "summary.html" page with the generated summary as a query parameter
+            window.location.href = "summary.html?summary=" + encodeURIComponent(generatedSummary);
+          },
+          error: function (error) {
+            console.error("API request failed:", error);
+          },
         });
-    </script>
+      });
+    });
+  </script>
 </body>
 </html>
