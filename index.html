@@ -79,7 +79,7 @@
             <label for="pdfFile" style="cursor: pointer; background-color: #08a88a; color: white; padding: 10px 20px; border-radius: 5px;">Choose PDF File</label>
             <input type="file" name="pdfFile" accept=".pdf" id="pdfFile" style="display: none;">
             <textarea name="userText" id="userText" rows="6" placeholder="Or enter your legal text here"></textarea>
-            <button type="submit">Submit</button>
+            <button type="submit"><a href="summary.html" target="_blank">Submit</a</button>
         </form>
     </section>
 
@@ -89,41 +89,4 @@
         <!-- Footer content goes here -->
     </footer>
 </body>
-<script type="module">
-    // Import the functions you need from the SDKs you need
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.3.1/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.3.1/firebase-analytics.js";
-    // TODO: Add SDKs for Firebase products that you want to use
-    // https://firebase.google.com/docs/web/setup#available-libraries
-  
-    // Your web app's Firebase configuration
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-    const firebaseConfig = {
-      apiKey: "AIzaSyBiPXyYg2aNz68YCKTON2ptlL-ZB1xhezc",
-      authDomain: "legal-bbaf2.firebaseapp.com",
-      projectId: "legal-bbaf2",
-      storageBucket: "legal-bbaf2.appspot.com",
-      messagingSenderId: "855629703785",
-      appId: "1:855629703785:web:a7d9c033b6fe196e2950f8",
-      measurementId: "G-Y2H1THWFSJ"
-    };
-  
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-</script>
-<script>
-  const storage = firebase.storage();
-  const storageRef = storage.ref();
-  const folderRef = storageRef.child('legal');
-
-  // List items in the folder
-  folderRef.listAll().then((result) => {
-    result.items.forEach((item) => {
-      console.log('File:', item.name);
-    });
-  }).catch((error) => {
-    console.error('Error listing files:', error);
-  });
-</script>
 </html>
