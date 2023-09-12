@@ -1,4 +1,3 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,8 +12,18 @@
     </div>
   </header>
 
-  <!-- ...rest of your HTML content... -->
-  
+  <!-- Add a form for user input -->
+  <form id="generation-form">
+    <label for="userPrompt">Enter your prompt:</label>
+    <input type="text" id="userPrompt" name="userPrompt">
+    <button type="submit">Generate</button>
+  </form>
+
+  <!-- Add a div to display the generated summary -->
+  <div id="summary"></div>
+
+  <!-- Include the config.js file -->
+  <script src="config.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
     $(document).ready(function () {
@@ -25,15 +34,26 @@
         // Get the user's input prompt
         var userPrompt = $("#userPrompt").val();
 
-        // Make an API request to GPT-3
+        // Make an API request to GPT-3 using the apiKey from config.js
         $.ajax({
           url: "https://api.openai.com/v1/engines/davinci/completions",
           type: "POST",
           headers: {
-            "Authorization": "Bearer YOUR_API_KEY_HERE", // This will be replaced by the actual API key
+            "Authorization": "Bearer " + apiKey, // Use the apiKey variable from config.js
             "Content-Type": "application/json",
           },
-          // ...rest of your code...
+          data: JSON.stringify({
+            prompt: userPrompt,
+            max_tokens: 50, // Adjust as needed
+          }),
+          success: function (response) {
+            // Display the generated summary
+            var generatedSummary = response.choices[0].text;
+            $("#summary").text(generatedSummary);
+          },
+          error: function (error) {
+            console.error("Error:", error);
+          },
         });
       });
     });
