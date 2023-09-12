@@ -12,13 +12,31 @@
     </div>
   </header>
 
-  <!-- ...rest of your HTML content... -->
-  
+  <section class="hero">
+    <h1 class="slogan">Generate Text with AI</h1>
+    <p class="summary">Enter a prompt, and AI will generate text for you. Try it now!</p>
+  </section>
+
+  <section class="text-generation-section">
+    <h2>Enter Your Prompt</h2>
+    <form id="generation-form">
+      <textarea name="userPrompt" id="userPrompt" rows="4" cols="50" placeholder="Enter your prompt here"></textarea>
+      <button type="submit">Generate Text</button>
+    </form>
+  </section>
+
+  <section class="generated-text-section" style="display: none;">
+    <h2>Generated Text</h2>
+    <div id="generated-text-content">
+      <!-- The generated text will be displayed here -->
+    </div>
+  </section>
+
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  
+
   <!-- Include your configuration file -->
   <script src="config.js"></script>
-  
+
   <script>
     $(document).ready(function () {
       // Handle form submission
@@ -36,7 +54,21 @@
             "Authorization": "Bearer " + apiKey, // Use the apiKey variable from config.js
             "Content-Type": "application/json",
           },
-          // ...rest of your code...
+          data: JSON.stringify({
+            prompt: userPrompt,
+            max_tokens: 150, // Adjust this as needed for your text generation
+          }),
+          success: function (data) {
+            // Extract the generated text from the API response
+            var generatedText = data.choices[0].text;
+
+            // Display the generated text on the webpage
+            $("#generated-text-content").html("<p>" + generatedText + "</p>");
+            $(".generated-text-section").show(); // Show the generated text section
+          },
+          error: function (error) {
+            console.error("API request failed:", error);
+          },
         });
       });
     });
