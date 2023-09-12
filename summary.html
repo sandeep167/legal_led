@@ -3,81 +3,8 @@
 <head>
   <meta charset="utf-8">
   <title>Summary</title>
-  <style>
-    body {
-      background-color: #f2f2f2; /* Set a light background color for the body */
-      color: #333; /* Set the text color to a dark gray */
-      text-align: center; /* Center align the text */
-      padding: 20px; /* Add some padding to create space */
-      font-size: 16px; /* Set the default font size */
-      font-family: Arial, sans-serif; /* Specify a fallback font family */
-    }
-
-    header {
-      background-color: #e74c3c; /* Set the header background color to a red shade */
-      padding: 20px; /* Add padding to the header */
-      border-radius: 15px; /* Add curved edges to the header */
-      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Add a subtle shadow to the header */
-      margin-bottom: 20px; /* Add margin to separate the header from content */
-    }
-
-    h1 {
-      font-size: 32px; /* Increase the font size of the header */
-      margin: 0; /* Remove margin to ensure proper alignment */
-      color: white; /* Set the text color of the header to white */
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add a text shadow */
-    }
-
-    .intro {
-      background-color: #3498db; /* Set a blue background color for the introduction section */
-      color: white; /* Set text color to white */
-      padding: 40px; /* Add padding to the introduction section */
-    }
-
-    .intro p  {
-      font-size: 20px;
-      line-height: 1.5;
-      max-width: 80%; /* Limit the maximum width of the paragraph */
-      margin: 0 auto; /* Center align the paragraph */
-    }
-
-    .intro pre {
-      white-space: pre-wrap;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-      margin-top: 45px;
-      margin-bottom: -90px;
-    }
-
-    section {
-      background-color: white; /* Set a white background color for content sections */
-      padding: 20px; /* Add padding to content sections */
-      margin-bottom: 20px; /* Add margin between sections */
-      border-radius: 10px; /* Add curved edges to content sections */
-      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow to content sections */
-    }
-
-    a.special-link {
-      color: white; /* Set link color to white */
-      background-color: #e74c3c; /* Set background color to red */
-      text-decoration: none; /* Remove underline from links */
-      font-weight: bold; /* Make links bold */
-      padding: 10px 20px; /* Add padding to the link */
-      border-radius: 5px; /* Add rounded corners to the link */
-      transition: background-color 0.3s; /* Add a smooth color transition */
-    }
-
-    a.special-link:hover {
-      background-color: #c0392b; /* Change background color on hover */
-    }
-
-    img {
-      max-width: 100%; /* Ensure images don't overflow their container */
-      height: auto; /* Maintain image aspect ratio */
-    }
-  </style>
+  <!-- Add your CSS styles and include jQuery if needed -->
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header>
@@ -86,25 +13,48 @@
   <section>
     <h2>Section 1</h2>
     <div class="">
-      <p><pre id="document-content">Summary of the Legal Document...</pre><p>
-      <a href="Advice.html" class="special-link" target="_blank">Get Legal Advice</a>
+      <form id="summary-form">
+        <textarea name="userText" id="userText" rows="4" cols="50" placeholder="Enter your text here"></textarea>
+        <button type="submit">Generate Summary</button>
+      </form>
     </div>
-<script>
-    fetch('https://script.google.com/macros/s/AKfycbxEDc4UdDseGtWaF0B_rBxs8bimK75xFd8UsnXJK9P6r_EuTtOjfTliDBC65rRGg8Qo/exec')
-    .then(response => response.text())
-    .then(data => {
-        const documentContent = document.getElementById('document-content');
+  </section>
 
-        // Use a regular expression to find URLs in the content and make them clickable
-        const formattedContent = data.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">$1</a>');
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      // Handle form submission
+      $("#summary-form").submit(function (event) {
+        event.preventDefault(); // Prevent the form from submitting traditionally
 
-        // Replace [image] placeholders with HTML image tags
-        const contentWithImages = formattedContent.replace(/\[image\]\((https?:\/\/[^\s]+)\)/g, '<img src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg" alt="Image">');
+        // Get the user's input text
+        var userText = $("#userText").val();
 
-        documentContent.innerHTML = contentWithImages;
-    })
-    .catch(error => console.error('Error fetching document:', error));
-</script>
+        // Make an API request to GPT-3 to generate a summary
+        $.ajax({
+          url: "https://api.openai.com/v1/engines/davinci/completions",
+          type: "POST",
+          headers: {
+            "Authorization": "Bearer YOUR_API_KEY_HERE", // Replace with your GPT-3 API key
+            "Content-Type": "application/json",
+          },
+          data: JSON.stringify({
+            prompt: userText,
+            max_tokens: 150, // Adjust this as needed for your summaries
+          }),
+          success: function (data) {
+            // Extract the summary from the API response
+            var generatedSummary = data.choices[0].text;
 
+            // Redirect to the "summary.html" page with the generated summary as a query parameter
+            window.location.href = "summary.html?summary=" + encodeURIComponent(generatedSummary);
+          },
+          error: function (error) {
+            console.error("API request failed:", error);
+          },
+        });
+      });
+    });
+  </script>
 </body>
 </html>
