@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
         fetch('https://api.openai.com/v1/engines/davinci/completions', {
             method: 'POST',
             headers: {
-                'Authorization': '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', // Replace with your GPT-3 API key
+                'Authorization':"Bearer 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", // Replace with your GPT-3 API key
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
