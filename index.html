@@ -28,41 +28,6 @@
   </section>
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script>
-    $(document).ready(function () {
-      // Handle form submission
-      $("#summary-form").submit(function (event) {
-        event.preventDefault(); // Prevent the form from submitting traditionally
-
-        // Get the user's input text
-        var userText = $("#userText").val();
-
-        // Make an API request to GPT-3 to generate a summary
-        $.ajax({
-          url: "https://api.openai.com/v1/engines/davinci/completions",
-          type: "POST",
-          headers: {
-            "Authorization": "Bearer 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",
-            "Content-Type": "application/json",
-          },
-          data: JSON.stringify({
-            prompt: userText,
-            max_tokens: 150, // Adjust this as needed for your summaries
-          }),
-          success: function (data) {
-            // Extract the summary from the API response
-            var generatedSummary = data.choices[0].text;
-
-            // Display the summary on the same page
-            $("#summary-content").text(generatedSummary);
-            $("#summary-section").show();
-          },
-          error: function (error) {
-            console.error("API request failed:", error);
-          },
-        });
-      });
-    });
-  </script>
+  <!-- Remove the JavaScript code from here -->
 </body>
 </html>
