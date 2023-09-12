@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Legal Summary</title>
+    <style>
+        /* Add your CSS styles for the form here */
+        .upload-section form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .upload-section textarea {
+            width: 100%;
+            max-width: 600px; /* Adjust the maximum width as needed */
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .upload-section input[type="file"] {
+            display: none;
+        }
+
+        .upload-section label {
+            cursor: pointer;
+            background-color: #08a88a;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin-bottom: 10px; /* Add margin to create space */
+        }
+
+        .upload-section button[type="submit"] {
+            padding: 10px 20px;
+            background-color: #08a88a;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .upload-section button[type="submit"]:hover {
+            background-color: #007761; /* Change the color on hover if desired */
+        }
+
+        .upload-section #viewSummary {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <script src="https://cdn.lordicon.com/bhenfmcm.js"></script>
+            <lord-icon
+                src="https://cdn.lordicon.com/nocovwne.json"
+                trigger="hover"
+                colors="primary:#121331,secondary:#08a88a"
+                style="width:100px;height:100px">
+            </lord-icon>
+            <h1 class="website-name">LEGAL SUMMARY</h1>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1 class="slogan">Legal Knowledge Made Accessible</h1>
+        <p class="summary">Discover a new way to tackle complex legal documents. Our service transforms intricate legalese into clear, concise summaries, making the law accessible to everyone. Empower yourself with knowledge today.</p>
+    </section>
+
+    <section class="upload-section">
+        <h2>Upload a PDF File or Enter Your Text</h2>
+        <form action="#" method="POST" enctype="multipart/form-data">
+            <label for="pdfFile" style="cursor: pointer; background-color: #08a88a; color: white; padding: 10px 20px; border-radius: 5px;">Choose PDF File</label>
+            <input type="file" name="pdfFile" accept=".pdf" id="pdfFile" style="display: none;">
+            <textarea name="userText" id="userText" rows="6" placeholder="Or enter your legal text here"></textarea>
+            <button type="click"><a href="summary.html">Submit</a></button>
+        </form>
+    </section>
+
+    <!-- Your main content here -->
+
+    <footer>
+        <!-- Footer content goes here -->
+    </footer>
+</body>
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.3.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.3.1/firebase-analytics.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyBiPXyYg2aNz68YCKTON2ptlL-ZB1xhezc",
+      authDomain: "legal-bbaf2.firebaseapp.com",
+      projectId: "legal-bbaf2",
+      storageBucket: "legal-bbaf2.appspot.com",
+      messagingSenderId: "855629703785",
+      appId: "1:855629703785:web:a7d9c033b6fe196e2950f8",
+      measurementId: "G-Y2H1THWFSJ"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+</script>
+<script>
+  const storage = firebase.storage();
+  const storageRef = storage.ref();
+  const folderRef = storageRef.child('legal');
+
+  // List items in the folder
+  folderRef.listAll().then((result) => {
+    result.items.forEach((item) => {
+      console.log('File:', item.name);
+    });
+  }).catch((error) => {
+    console.error('Error listing files:', error);
+  });
+</script>
+</html>
