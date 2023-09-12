@@ -1,3 +1,4 @@
 // config.js
-var apiKey = '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; // Replace with your actual API key
-
+module.exports = {
+  apiKey: 'YOUR_API_KEY_HERE', // Replace with your actual API key
+};
