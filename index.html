@@ -12,11 +12,18 @@
   </header>
   <section>
     <h2>Section 1</h2>
-    <div class="">
+    <div>
       <form id="summary-form">
         <textarea name="userText" id="userText" rows="4" cols="50" placeholder="Enter your text here"></textarea>
         <button type="submit">Generate Summary</button>
       </form>
+    </div>
+  </section>
+  
+  <section id="summary-section" style="display: none;">
+    <h2>Generated Summary</h2>
+    <div>
+      <p id="summary-content"></p>
     </div>
   </section>
 
@@ -35,7 +42,7 @@
           url: "https://api.openai.com/v1/engines/davinci/completions",
           type: "POST",
           headers: {
-            "Authorization": "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", // Replace with your GPT-3 API key
+            "Authorization": "Bearer YOUR_API_KEY_HERE", // Replace with your GPT-3 API key
             "Content-Type": "application/json",
           },
           data: JSON.stringify({
@@ -46,8 +53,9 @@
             // Extract the summary from the API response
             var generatedSummary = data.choices[0].text;
 
-            // Redirect to the "summary.html" page with the generated summary as a query parameter
-            window.location.href = "summary.html?summary=" + encodeURIComponent(generatedSummary);
+            // Display the summary on the same page
+            $("#summary-content").text(generatedSummary);
+            $("#summary-section").show();
           },
           error: function (error) {
             console.error("API request failed:", error);
