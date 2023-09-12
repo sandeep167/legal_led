@@ -1,68 +1,70 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Summary</title>
-  <!-- Add your CSS styles and include jQuery if needed -->
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>AI Text Generation</title>
 </head>
 <body>
-  <header>
-    <h1>SUMMARY</h1>
-  </header>
-  <section>
-    <h2>Section 1</h2>
-    <div>
-      <form id="summary-form">
-        <textarea name="userText" id="userText" rows="4" cols="50" placeholder="Enter your text here"></textarea>
-        <button type="submit">Generate Summary</button>
-      </form>
+    <header>
+        <div class="header-content">
+            <h1 class="website-name">AI Text Generation</h1>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1 class="slogan">Generate Text with AI</h1>
+        <p class="summary">Enter a prompt, and AI will generate text for you. Try it now!</p>
+    </section>
+
+    <section class="text-generation-section">
+        <h2>Enter Your Prompt</h2>
+        <form id="generation-form">
+            <textarea name="userPrompt" id="userPrompt" rows="4" cols="50" placeholder="Enter your prompt here"></textarea>
+            <button type="submit">Generate Text</button>
+        </form>
+    </section>
+
+    <div id="generated-text">
+        <!-- The generated text will be displayed here -->
     </div>
-  </section>
-  
-  <section id="summary-section" style="display: none;">
-    <h2>Generated Summary</h2>
-    <div>
-      <p id="summary-content"></p>
-    </div>
-  </section>
 
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script>
-    $(document).ready(function () {
-      // Handle form submission
-      $("#summary-form").submit(function (event) {
-        event.preventDefault(); // Prevent the form from submitting traditionally
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Handle form submission
+            $("#generation-form").submit(function (event) {
+                event.preventDefault(); // Prevent the form from submitting traditionally
 
-        // Get the user's input text
-        var userText = $("#userText").val();
+                // Get the user's input prompt
+                var userPrompt = $("#userPrompt").val();
 
-        // Make an API request to GPT-3 to generate a summary
-        $.ajax({
-          url: "https://api.openai.com/v1/engines/davinci/completions",
-          type: "POST",
-          headers: {
-            "Authorization": "Bearer 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", // Replace with your GPT-3 API key
-            "Content-Type": "application/json",
-          },
-          data: JSON.stringify({
-            prompt: userText,
-            max_tokens: 150, // Adjust this as needed for your summaries
-          }),
-          success: function (data) {
-            // Extract the summary from the API response
-            var generatedSummary = data.choices[0].text;
+                // Make an API request to GPT-3 (replace 'YOUR_API_KEY_HERE' with your actual API key)
+                $.ajax({
+                    url: "https://api.openai.com/v1/engines/davinci/completions",
+                    type: "POST",
+                    headers: {
+                        "Authorization": "Bearer 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", // Replace with your GPT-3 API key
+                        "Content-Type": "application/json",
+                    },
+                    data: JSON.stringify({
+                        prompt: userPrompt,
+                        max_tokens: 150, // Adjust this as needed for your text generation
+                    }),
+                    success: function (data) {
+                        // Extract the generated text from the API response
+                        var generatedText = data.choices[0].text;
 
-            // Display the summary on the same page
-            $("#summary-content").text(generatedSummary);
-            $("#summary-section").show();
-          },
-          error: function (error) {
-            console.error("API request failed:", error);
-          },
+                        // Display the generated text on the webpage
+                        $("#generated-text").html("<h3>Generated Text:</h3><p>" + generatedText + "</p>");
+                    },
+                    error: function (error) {
+                        console.error("API request failed:", error);
+                    },
+                });
+            });
         });
-      });
-    });
-  </script>
+    </script>
 </body>
 </html>
